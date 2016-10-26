@@ -1,42 +1,67 @@
 package cn.zhanyongzhi.leetcode;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class LengthOfLongestSubstring {
-    public int lengthOfLongestSubstring(String s) {
-        Set<Character> compareSet = new HashSet(20);
-        int incIndex = 0;
-        int maxLen = 0;
-        int size = 0;
-        char ele;
+    String str;
+    int strlen;
 
-        for(int i=0; i<s.length(); i++){
-            char curr = s.charAt(i);
-            if(!compareSet.contains(curr)){
-                compareSet.add(curr);
-                continue;
-            }
+    public String longestPalindrome(String s) {
+        str = s;
+        strlen = s.length();
+        String longestStr = s.substring(0, 1);
 
-            size = compareSet.size();
-            if(size > maxLen)
-                maxLen = size;
+        for(int i=0; i<strlen - 1; i++){
+            String tmpStr = getPalindromeStr(i);
+            if(tmpStr.length() > longestStr.length())
+                longestStr = tmpStr;
 
-            for(; incIndex<i; incIndex++){
-                ele = s.charAt(incIndex);
-                if(curr == ele){
-                    incIndex++;
-                    break;
-                }
-
-                compareSet.remove(ele);
-            }
+            tmpStr = getPalindromeStr2(i);
+            if(tmpStr.length() > longestStr.length())
+                longestStr = tmpStr;
         }
 
-        size = compareSet.size();
-        if(size > maxLen)
-            return size;
+        return longestStr;
+    }
 
-        return maxLen;
+    String getPalindromeStr(int index){
+        int count = Math.min(index, strlen - index - 2);
+
+        for(int i=0; i<=count; i++){
+            char left = str.charAt(index - i);
+            char right = str.charAt(index + i + 1);
+
+            if(left != right){
+                return str.substring(index - i + 1, index + i + 1);
+            }
+
+            if(i == count)
+                return str.substring(index - i, index + i + 2);
+        }
+
+        return str.substring(index, index + 1);
+    }
+
+    String getPalindromeStr2(int index){
+        int count = Math.min(index, strlen - index - 1);
+
+        for(int i=1; i<=count; i++){
+            char left = str.charAt(index - i);
+            char right = str.charAt(index + i);
+
+            if(left != right){
+                return str.substring(index - i + 1, index + i);
+            }
+
+            if(i == count)
+                return str.substring(index - i, index + i + 1);
+        }
+
+        return str.substring(index, index + 1);
+    }
+
+    public static void main(String[] args){
+        LengthOfLongestSubstring tLengthOfLongestSubstring = new LengthOfLongestSubstring();
+        String tSubStr = tLengthOfLongestSubstring.longestPalindrome("ccc");
+
+        System.out.println(tSubStr);
     }
 }
