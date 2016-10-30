@@ -27,7 +27,7 @@ public class ReverseInteger {
                 break;
         }
 
-        //long contain int value, invoid overflow case happen
+        //long contain int value, avoid overflow case happen
         long result = 0;
         while(0 != x || 0 != val){
             result = result * 10 + val;
