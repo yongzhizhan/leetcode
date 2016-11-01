@@ -3,40 +3,26 @@ package cn.zhanyongzhi.leetcode;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 额外空间和速度都是O(n)的基数排序
+ */
+
 public class FindDuplicates {
     public List<Integer> findDuplicates(int[] nums) {
         List<Integer> result = new ArrayList(nums.length);
 
-        int item = 0;
-        int next = 0;
+        for(int i=0; i<nums.length; i++){
+            int item = Math.abs(nums[i]);
+            int val = nums[item - 1];
 
-        int curIndex = 0;
-
-        while(curIndex < nums.length){
-            item = nums[curIndex];
-            int itemIndex = item - 1;
-            if(-1 == item || itemIndex == curIndex){
-                curIndex++;
-                continue;
-            }
-
-            next = nums[itemIndex];
-            if(next == item){
+            //小于0表示之前访问过
+            if(val < 0){
                 result.add(item);
-                nums[itemIndex] = -1;
-                curIndex++;
-                continue;
+            }else{
+                nums[item - 1] = -1 * val;
             }
-
-            nums[itemIndex] = nums[curIndex];
-            nums[curIndex] = next;
         }
 
         return result;
-    }
-
-    public static void main(String[] args){
-        FindDuplicates tFindDuplicates = new FindDuplicates();
-        tFindDuplicates.findDuplicates(new int[]{2,1});
     }
 }
