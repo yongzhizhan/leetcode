@@ -3,9 +3,6 @@ package cn.zhanyongzhi.leetcode;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 额外空间和速度都是O(n)的基数排序
- */
 
 public class FindDuplicates {
     public List<Integer> findDuplicates(int[] nums) {
